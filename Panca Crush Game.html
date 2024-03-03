@@ -18,7 +18,6 @@
         height: 100vh;
         background-image: url('img/Pancasila.png');
         background-size:60px;
-        background-blend-mode: ;
         animation: background-scroll 30s linear infinite;
       }
 
@@ -29,7 +28,7 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        max-width: 90%;
+        max-width: 95%;
         margin: 20px;
       }
 
@@ -46,7 +45,7 @@
         grid-template-columns: repeat(7, 12%);
         gap: 12px;
         position: relative; /* Added for explosion animation */
-        max-width: 90%;
+        max-width: 95%;
         align-items: center;
         justify-content: center;
         margin-left: 40px;
@@ -127,7 +126,7 @@
         text-align: center;
         font-size: 30px;
         margin-bottom: 40px;
-        margin-top: 10px;
+        margin-top: 25px;
         text-shadow: -2px 2px 4px rgba(0, 0, 0, 5);
       }
 
@@ -138,7 +137,7 @@
         text-shadow: 0px 2px 2px black;
         text-align: center;
         font-weight: bold;
-        margin-top: 30px;
+        margin-top: 20px;
         color: whitesmoke;
       }
 
@@ -164,22 +163,22 @@
         display: none;
       }
 
-      #reset-button {
+      #return-to-game-button {
+        display: none; /* Tombol disembunyikan secara default */
         margin-top: 10px;
-        padding: 12px 18px;
-        font-size: 18px;
-        font-weight: bold;
-        background-color: greenyellow;
+        padding: 12px 28px;
+        font-size: 16px;
+        background-color: #0AFE47;
         color: white;
         border: none;
-        border-radius: 8px;
+        border-radius: 14px;
         cursor: pointer;
-        display: none;
-        box-shadow: 0px 4px 6px black;
+        box-shadow: 0px 2px 4px black;
+        transition: background-color 0.3s ease;
       }
-
-      #reset-button:hover {
-        background-color: rgba(194, 255, 103, 0.752);
+      
+      #return-to-game-button:hover {
+        background-color: #0afe4783;
       }
 
       /* New styles for explosion animation */
@@ -206,33 +205,6 @@
         border: 1.5px solid;
         color: black;
         background: linear-gradient(rgb(3, 209, 255), rgb(212, 247, 255));
-      }
-
-      #confetti-container {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        pointer-events: none;
-        z-index: 9999;
-      }
-
-      .confetti {
-        position: absolute;
-        width: 10px;
-        height: 10px;
-        border-radius: 50%;
-        animation: confetti-fall linear infinite;
-      }
-
-      @keyframes confetti-fall {
-        0% {
-          transform: translateY(-100vh) rotate(0deg);
-        }
-        100% {
-          transform: translateY(100vh) rotate(360deg);
-        }
       }
 
       @keyframes background-scroll {
@@ -365,16 +337,15 @@
     <div id="game-container">
       <h1 id="title">⟬ Panca Crush ⟭</h1>
       <div id="game-board"></div>
-      <div id="highscore"> Score&nbsp;&nbsp;<span id="highscore-value">0</span>
-      </div>
+      <div id="highscore"> Score&nbsp;&nbsp;<span id="highscore-value">0</span></div>
       <div id="timer"><span id="timer-value">0:00</span></div>
       <div id="game-over">Game Over😭</div>
-      <button id="reset-button">Try Again</button>
+      <button id="return-to-game-button">Try Again</button>
       <div id="confetti-container"></div>
 
       <select id="music-selection">
         <optgroup label="Opsi 1">
-          <option value="music/Backsound 1.mp3">Candy Crush-Backsound</option>
+          <option value="music/Backsound .mp3">Candy Crush-Backsound</option>
           <option value="music/Backsound 2.mp3">Harvest moon-Town theme</option>
           <option value="music/Backsound 3.mp3">Stumbel guys-Backsound</option>
           <option value="music/Backsound 4.mp3">Children's Advanture-Soundtrack Pou</option>
@@ -403,18 +374,19 @@
           <option value="music/Backsound 21"></option>
           <option value="music/Backsound 22"></option>
           <option value="music/Backsound 23"></option>
-          <option value="music/backsound 24></option>
+          <option value="music/backsound 24"></option>
         </optgroup>
-      </select>  
-      <audio autoplay src=""></audio>
+      </select>
     
     <script>
       const gameBoard = document.getElementById("game-board");
       const highscoreElement = document.getElementById("highscore-value");
       const timerElement = document.getElementById("timer-value");
-      const gameOverElement = document.getElementById("game-over");
       const resetButton = document.getElementById("reset-button");
       const musicSelection = document.getElementById("music-selection");
+      const returnToGameButton = document.getElementById("return-to-game-button");
+      const gameOverElement = document.getElementById("game-over");
+
 
       let selectedCell = null;
       let score = 0;
@@ -424,8 +396,9 @@
       let startTime = 0;
       let gameEnded = false;
       let audio = null;
-
-      resetButton.addEventListener("click", resetGame);
+      
+      gameOverElement.style.display = "block";
+      returnToGameButton.style.display = "block";
       musicSelection.addEventListener("change", changeMusic);
 
       function createGameBoard() {
@@ -640,7 +613,7 @@
       function changeMusic() {
         if (audio) {
           audio.pause();
-        }
+        } 
         audio = new Audio(musicSelection.value);
         audio.loop = true;
         audio.play();
@@ -669,11 +642,16 @@
         setInterval(updateTimer, 1000);
       }
 
+      // Atur display menjadi none secara default
+      returnToGameButton.style.display = "none";
+      gameOverElement.style.display = "none";
+
+      // Fungsi endGame yang sudah Anda definisikan
       function endGame() {
         // Tampilkan pesan "Game Over"
         gameOverElement.style.display = "block";
-        // Tampilkan tombol reset
-        resetButton.style.display = "block";
+        // Tampilkan tombol kembali ke permainan
+        returnToGameButton.style.display = "block";
         // Hentikan pembaruan timer
         clearInterval(updateTimer);
         // Atur gameEnded menjadi true untuk menghentikan gameplay lebih lanjut
@@ -681,21 +659,11 @@
         // Lakukan tindakan tambahan di sini, seperti menyembunyikan papan permainan atau menonaktifkan interaksi dengan sel
       }
 
-      function resetGame() {
-        // Clear game board
-        gameBoard.innerHTML = "";
-        // Reset score
-        score = 0;
-        highscoreElement.textContent = "0";
-        // Reset timer
-        gameEnded = false;
-        startTime = Date.now();
-        // Remove "Game Over" message and reset button
-        gameOverElement.style.display = "none";
-        resetButton.style.display = "none";
-        // Start game again
-        startGame();
-      }
+      //fungsi untuk memulai kembali permainan
+      returnToGameButton.addEventListener("click", () => {
+          // Redirect ke halaman game
+          window.location.href = "Panca Crush Game.html"; // Ganti "nama_file_game.html" dengan nama file game Anda
+      });
 
       startGame();
 
