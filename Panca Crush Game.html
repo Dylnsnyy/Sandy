@@ -2,11 +2,26 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="img/icon.png" type="image/x-icon" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
     <title>Panca Crush Game</title>
     <style>
+
+      @media screen and (max-width: 768px) {
+      /* Aturan CSS khusus untuk layar dengan lebar maksimum 768px (misalnya perangkat seluler) */
+      #game-container {
+          max-width: 100%; /* Lebar maksimum game container */
+          margin: 10px; /* Margin agar game container tidak terlalu dekat dengan tepi layar */
+        }
+      
+      .cell {
+          width: 10%; /* Lebar sel */
+          height: 10%; /* Tinggi sel */
+          font-size: 3vw; /* Ukuran font responsif */
+        }
+      }
+
       body {
         font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
         background-color:#0088ff;
@@ -136,7 +151,10 @@
         box-shadow: 0 0 10px white; /* Contoh efek bayangan saat hover */
         transition: box-shadow 0.3s ease-in-out; /* Animasi perubahan saat hover */
       }
-
+      .cell:hover {
+        background-color: #ffffff85;
+      }
+      
       .cell.removed {
         transform: scale(0);
         opacity: 0;
@@ -195,8 +213,10 @@
 
       #return-to-game-button {
         display: none; /* Tombol disembunyikan secara default */
+        margin: 0 auto;
         margin-top: 10px;
-        padding: 12px 28px;
+        width: 160px;
+        height: 40px;
         font-size: 16px;
         background-color: #0AFE47;
         color: white;
@@ -377,12 +397,12 @@
       <div id="highscore"> Score&nbsp;&nbsp;<span id="highscore-value">0</span></div>
       <div id="timer"><span id="timer-value">0:00</span></div>
       <div id="game-over">Game Over😭</div>
-      <button id="return-to-game-button">Try Again</button>
+      <button id="return-to-game-button">Try Again?🤔</button>
       <div id="confetti-container"></div>
-
+     
       <select id="music-selection">
         <optgroup label="Opsi 1">
-          <option value="music/Backsound 1.mp3">Candy Crush-Backsound</option>
+          <option value="music/Backsound .mp3">Candy Crush-Backsound</option>
           <option value="music/Backsound 2.mp3">Harvest moon-Town theme</option>
           <option value="music/Backsound 3.mp3">Stumbel guys-Backsound</option>
           <option value="music/Backsound 4.mp3">Children's Advanture-Soundtrack Pou</option>
@@ -685,22 +705,12 @@
 
       // Fungsi endGame yang sudah Anda definisikan
       function endGame() {
-        // Tampilkan pesan "Game Over"
         gameOverElement.style.display = "block";
-        // Tampilkan tombol kembali ke permainan
         returnToGameButton.style.display = "block";
-        // Hentikan pembaruan timer
-        clearInterval(timerInterval);
-        // Atur gameEnded menjadi true untuk menghentikan gameplay lebih lanjut
+        clearInterval(updateTimer); // Menghentikan pembaruan timer
         gameEnded = true;
-        // Sembunyikan papan permainan
-        gameBoard.style.display = "none";
-        // Menonaktifkan interaksi dengan sel
-        const cells = gameBoard.children;
-        for (let i = 0; i < cells.length; i++) {
-            cells[i].style.pointerEvents = "none";
-        }
       }
+
 
       //fungsi untuk memulai kembali permainan
       returnToGameButton.addEventListener("click", () => {
@@ -716,7 +726,7 @@
             document.getElementById("game-container").style.display = "grid";
             // Panggil fungsi startGame setelah layar transisi selesai
             startGame();
-        }, 5000); // Ganti angka 2000 dengan durasi transisi dalam milidetik
+        }, 2000); // Ganti angka 2000 dengan durasi transisi dalam milidetik
       });
 
     </script>
