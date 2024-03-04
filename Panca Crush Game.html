@@ -72,13 +72,16 @@
       
       #game-container {
         background: linear-gradient(#0088ff 0%, #fbc8c8 100%);
-        border-radius: 50px;
-        padding: 10px;
+        border-radius: 40px;
         display: flex;
         flex-direction: column;
         align-items: center;
         max-width: 90%;
-        margin: 20px;
+        margin: 0 auto;
+        padding-left: 20px;
+        padding-right: 20px;
+        padding-bottom: 20px;
+        padding-top: 20px;
       }
 
       .fade-out {
@@ -93,13 +96,12 @@
         max-width: 90%;
         align-items: center;
         justify-content: center;
-        margin-left: 40px;
-        margin-right: 40px;
+        margin: 0 auto;
       }
 
       .cell {
-        width: 50px;
-        height: 50px;
+        width: 60px;
+        height: 60px;
         padding: 10px; /* Untuk membuat sel menjadi kotak */
         border-radius: 16px;
         cursor: pointer;
@@ -234,8 +236,8 @@
       /* New styles for explosion animation */
       .explosion {
         position: absolute;
-        width: 50px; /* Adjust the width of the explosion animation */
-        height: 50px; /* Adjust the height of the explosion animation */
+        width: 60px; /* Adjust the width of the explosion animation */
+        height: 60px; /* Adjust the height of the explosion animation */
         background-image: url("img/bom.png"); /* Path to your explosion animation GIF */
         background-size: cover;
         pointer-events: none;
